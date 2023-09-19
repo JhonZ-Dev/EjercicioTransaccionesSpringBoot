@@ -6,7 +6,9 @@ import com.example.transaccionessrpingbootmysql.repositorio.DetalleFacRepo;
 import com.example.transaccionessrpingbootmysql.repositorio.FacturaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 
@@ -43,6 +45,28 @@ public class FacturaService {
     }
     @Transactional
     public void guardarFacturaV3(FacturaModelo facturaModelo) {
+        List<DetalleFacturaModelo> detalles = facturaModelo.getFacturaModelos();
+        if (detalles != null) {
+            for (DetalleFacturaModelo detalle : detalles) {
+                detalle.setFacturaModelo(facturaModelo);
+                detalleFacRepo.save(detalle);
+            }
+        }
+        facturaRepo.save(facturaModelo);
+    }
+    public void guardarFacturaV4(FacturaModelo facturaModelo) {
+        try {
+            guardarFacturaConRollback(facturaModelo);
+        } catch (MethodArgumentNotValidException e) {
+            // Manejar la excepción de validación
+            // Por ejemplo, registrar el error, devolver un mensaje al usuario, etc.
+        } catch (Exception e) {
+            // Manejar otras excepciones
+            // Por ejemplo, registrar el error, devolver un mensaje al usuario, etc.
+        }
+    }
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    public void guardarFacturaConRollback(FacturaModelo facturaModelo) throws MethodArgumentNotValidException {
         List<DetalleFacturaModelo> detalles = facturaModelo.getFacturaModelos();
         if (detalles != null) {
             for (DetalleFacturaModelo detalle : detalles) {
