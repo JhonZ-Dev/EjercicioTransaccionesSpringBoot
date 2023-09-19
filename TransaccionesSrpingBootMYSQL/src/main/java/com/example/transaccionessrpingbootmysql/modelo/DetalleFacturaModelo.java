@@ -12,4 +12,5 @@ public class DetalleFacturaModelo {
     private Long id_detalle;
     private String producto, cantidadProducto;
     private Double precioUnitario, precioTotal;
+    
 }
