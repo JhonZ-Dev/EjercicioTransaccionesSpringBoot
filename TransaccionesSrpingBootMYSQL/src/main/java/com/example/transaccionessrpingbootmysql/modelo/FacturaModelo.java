@@ -22,7 +22,7 @@ public class FacturaModelo {
     private String fech_facura;
     private String nombreCliente;
 
-    
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_factura")
     private List<DetalleFacturaModelo> facturaModelos;
