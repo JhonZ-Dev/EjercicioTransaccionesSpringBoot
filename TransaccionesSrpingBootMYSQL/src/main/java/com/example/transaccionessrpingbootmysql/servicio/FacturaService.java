@@ -76,4 +76,15 @@ public class FacturaService {
         }
         facturaRepo.save(facturaModelo);
     }
+    @Transactional(rollbackFor = {MethodArgumentNotValidException.class, Exception.class})
+    public void guardarFacturaV5(FacturaModelo facturaModelo) throws MethodArgumentNotValidException {
+        List<DetalleFacturaModelo> detalles = facturaModelo.getFacturaModelos();
+        if (detalles != null) {
+            for (DetalleFacturaModelo detalle : detalles) {
+                detalle.setFacturaModelo(facturaModelo);
+                detalleFacRepo.save(detalle); // Guardar cada detalle
+            }
+        }
+        facturaRepo.save(facturaModelo); // Guardar la factura (esto también guardará los detalles debido a la cascada definida en la relación)
+    }
 }
