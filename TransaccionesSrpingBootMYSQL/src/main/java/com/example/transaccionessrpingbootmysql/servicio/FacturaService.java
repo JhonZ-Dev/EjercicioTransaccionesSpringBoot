@@ -29,4 +29,16 @@ public class FacturaService {
             detalleFacRepo.save(detalle); // Guardar cada detalle
         }
     }
+
+    @Transactional
+    public void guardarFacturaV2(FacturaModelo facturaModelo, List<DetalleFacturaModelo> detalles) {
+        facturaModelo.setFacturaModelos(detalles); // Establecer la relación entre factura y detalles
+        facturaRepo.save(facturaModelo); // Guardar la factura (esto también guardará los detalles debido a la cascada definida en la relación)
+
+        // Asegurarse de establecer la relación entre cada detalle y la factura antes de guardar los detalles
+        for (DetalleFacturaModelo detalle : detalles) {
+            detalle.setFacturaModelo(facturaModelo);
+            detalleFacRepo.save(detalle); // Guardar cada detalle
+        }
+    }
 }
