@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -19,4 +21,9 @@ public class FacturaModelo {
     private String num_factura;
     private String fech_facura;
     private String nombreCliente;
+
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_factura")
+    private List<DetalleFacturaModelo> facturaModelos;
 }
