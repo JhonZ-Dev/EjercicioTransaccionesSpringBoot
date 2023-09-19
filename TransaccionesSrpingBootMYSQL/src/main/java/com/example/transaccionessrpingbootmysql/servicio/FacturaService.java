@@ -133,4 +133,19 @@ public class FacturaService {
             throw new MethodArgumentNotValidException((MethodParameter) null, null);
         }
     }
+    public void guardarFacturaVJ(FacturaModelo facturaModelo) throws MethodArgumentNotValidException {
+        try {
+            List<DetalleFacturaModelo> detalles = facturaModelo.getFacturaModelos();
+
+            for (DetalleFacturaModelo detalle : detalles) {
+                detalle.setFacturaModelo(facturaModelo);
+                detalleFacRepo.save(detalle);
+            }
+            facturaRepo.save(facturaModelo);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error general: " + ex.getMessage());
+        }
+    }
 }
