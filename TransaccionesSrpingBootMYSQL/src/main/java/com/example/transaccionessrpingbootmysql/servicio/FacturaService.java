@@ -41,4 +41,15 @@ public class FacturaService {
             detalleFacRepo.save(detalle); // Guardar cada detalle
         }
     }
+    @Transactional
+    public void guardarFacturaV3(FacturaModelo facturaModelo) {
+        List<DetalleFacturaModelo> detalles = facturaModelo.getFacturaModelos();
+        if (detalles != null) {
+            for (DetalleFacturaModelo detalle : detalles) {
+                detalle.setFacturaModelo(facturaModelo);
+                detalleFacRepo.save(detalle);
+            }
+        }
+        facturaRepo.save(facturaModelo);
+    }
 }
