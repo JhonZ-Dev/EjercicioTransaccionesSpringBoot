@@ -103,5 +103,12 @@ public class FacturaService {
         }
         facturaRepo.save(facturaModelo); // Guardar la factura (esto también guardará los detalles debido a la cascada definida en la relación)
     }
-
+    public void guardarFacturaV8(FacturaModelo facturaModelo) throws MethodArgumentNotValidException {
+        for (DetalleFacturaModelo detalle : facturaModelo.getFacturaModelos()) {
+            validarDetalleFacturaModelo(detalle);
+            detalle.setFacturaModelo(facturaModelo);
+            detalleFacRepo.save(detalle);
+        }
+        facturaRepo.save(facturaModelo);
+    }
 }
