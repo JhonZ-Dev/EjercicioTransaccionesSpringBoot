@@ -21,4 +21,9 @@ public class FacturaAndDetalle {
         facturaService.guardarFactura(facturaModelo, detalles);
     }
 
+    @PostMapping("/guardar")
+    public void guardarFactura(@RequestBody FacturaModelo facturaModelo, @RequestBody List<DetalleFacturaModelo> detalles) {
+        facturaService.guardarFacturaV2(facturaModelo, detalles);
+    }
+
 }
