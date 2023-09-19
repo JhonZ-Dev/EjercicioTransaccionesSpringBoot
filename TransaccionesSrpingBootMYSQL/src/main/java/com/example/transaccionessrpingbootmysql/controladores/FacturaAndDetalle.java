@@ -50,6 +50,9 @@ public class FacturaAndDetalle {
     public void guardarFacturaV7(@RequestBody FacturaModelo facturaModelo) throws MethodArgumentNotValidException {
         facturaService.guardarFacturaV8(facturaModelo);
     }
-
+    @PostMapping("/guardar/facturas/vj")
+    public void guardarFacturaVJ(@RequestBody FacturaModelo facturaModelo) throws MethodArgumentNotValidException {
+        facturaService.guardarFacturaVJ(facturaModelo);
+    }
 
 }
