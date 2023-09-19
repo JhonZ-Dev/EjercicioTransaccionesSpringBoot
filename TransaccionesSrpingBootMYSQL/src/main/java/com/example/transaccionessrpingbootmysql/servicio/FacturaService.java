@@ -5,6 +5,7 @@ import com.example.transaccionessrpingbootmysql.modelo.FacturaModelo;
 import com.example.transaccionessrpingbootmysql.repositorio.DetalleFacRepo;
 import com.example.transaccionessrpingbootmysql.repositorio.FacturaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,5 +111,26 @@ public class FacturaService {
             detalleFacRepo.save(detalle);
         }
         facturaRepo.save(facturaModelo);
+    }
+    private void validarDetalleFacturaModelo(DetalleFacturaModelo detalle) throws MethodArgumentNotValidException {
+        // Realiza las validaciones necesarias para el objeto DetalleFacturaModelo
+        // Por ejemplo, puedes utilizar un objeto Validator personalizado para hacerlo
+
+        // Ejemplo:
+        if (detalle.getProducto() == null || detalle.getProducto().isEmpty()) {
+            throw new MethodArgumentNotValidException((MethodParameter) null, null);
+        }
+
+        if (detalle.getCantidadProducto() == null || detalle.getCantidadProducto().isEmpty()) {
+            throw new MethodArgumentNotValidException((MethodParameter) null, null);
+        }
+
+        if (detalle.getPrecioUnitario() == null) {
+            throw new MethodArgumentNotValidException((MethodParameter) null, null);
+        }
+
+        if (detalle.getPrecioTotal() == null) {
+            throw new MethodArgumentNotValidException((MethodParameter) null, null);
+        }
     }
 }
