@@ -18,4 +18,5 @@ public class FacturaModelo {
     private Long id_factura;
     private String num_factura;
     private String fech_facura;
+    private String nombreCliente;
 }
